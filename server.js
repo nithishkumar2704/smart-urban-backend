@@ -12,6 +12,8 @@ const seedAdmin = require('./seedAdmin');
 // Connect to database
 connectDB().then(() => {
     seedAdmin();
+}).catch(err => {
+    console.error('Database connection failure:', err);
 });
 
 const app = express();
@@ -21,6 +23,9 @@ app.use(express.json());
 app.use(cors());
 
 // Routes
+app.get('/', (req, res) => {
+    res.send('API is running successfully');
+});
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/providers', require('./routes/providerRoutes'));
 app.use('/api/services', require('./routes/serviceRoutes'));
