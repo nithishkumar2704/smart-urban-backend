@@ -98,6 +98,25 @@ const seedData = async () => {
                     inspectionPrice: 200,
                     location: 'Chennai',
                     image: '/assets/images/appliances.png'
+                },
+                // Kanchipuram Providers
+                {
+                    title: 'Orikkai Plumbing Solutions',
+                    description: 'Emergency plumbing services in Orikkai and Kanchipuram area.',
+                    category: 'Plumbing',
+                    price: 450,
+                    inspectionPrice: 100,
+                    location: 'Orikkai, Kanchipuram',
+                    image: 'https://images.unsplash.com/photo-1505798577917-a651a5d60bb5?w=600&h=400&fit=crop'
+                },
+                {
+                    title: 'Kanchi Electricals',
+                    description: 'Professional electrician services for home and industry.',
+                    category: 'Electrical',
+                    price: 350,
+                    inspectionPrice: 100,
+                    location: 'Kanchipuram',
+                    image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&h=400&fit=crop'
                 }
             ];
 
