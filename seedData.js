@@ -104,10 +104,12 @@ const seedData = async () => {
         }
 
         console.log('Data Seeding Completed!');
-        process.exit();
+        // Do not exit process when running from server.js
+        // process.exit();
     } catch (error) {
         console.error('Error seeding data:', error);
-        process.exit(1);
+        // Do not exit process, just log error so server keeps running
+        // process.exit(1);
     }
 };
 
