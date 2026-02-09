@@ -24,15 +24,22 @@ const seedData = async () => {
         let providerId = null;
 
         for (const u of users) {
-            const exists = await User.findOne({ email: u.email });
-            if (!exists) {
-                const user = await User.create(u);
+            let user = await User.findOne({ email: u.email });
+
+            if (!user) {
+                user = await User.create(u);
                 console.log(`Created user: ${u.email}`);
-                if (u.role === 'provider') providerId = user._id;
             } else {
-                console.log(`User already exists: ${u.email}`);
-                if (u.role === 'provider') providerId = exists._id;
+                // Force update password to ensure known credentials work
+                // This is crucial for fixing "Invalid Password" issues
+                if (u.password) {
+                    user.password = u.password;
+                    await user.save(); // Triggers pre-save hash
+                    console.log(`Reset password for: ${u.email}`);
+                }
             }
+
+            if (u.role === 'provider') providerId = user._id;
         }
 
         // 2. Create Listings (only if provider exists)
