@@ -246,12 +246,4 @@ exports.cancelBooking = async (req, res) => {
     }
 };
 
-module.exports = {
-    createBooking,
-    getUserBookings,
-    getProviderBookings,
-    getBookingById,
-    updateBookingStatus,
-    updateBooking,
-    cancelBooking
-};
+
