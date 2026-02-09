@@ -195,12 +195,4 @@ exports.getProviderStats = async (req, res) => {
     }
 };
 
-module.exports = {
-    registerProvider,
-    getProviders,
-    getNearbyProvidersController,
-    getProviderById,
-    updateProviderProfile,
-    verifyProvider,
-    getProviderStats
-};
+
