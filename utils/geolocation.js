@@ -33,30 +33,28 @@ exports.getNearbyProviders = async (userLat, userLng, radiusKm = 10, Provider) =
     return nearbyProviders.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
 };
 
-// Geocode address to coordinates using Google Geocoding API
+// Geocode address to coordinates using OpenStreetMap Nominatim (Free)
 exports.geocodeAddress = async (address) => {
     const axios = require('axios');
-    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
-
-    if (!apiKey) {
-        console.error('Google Maps API key not configured');
-        return null;
-    }
 
     try {
-        const response = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+        const response = await axios.get('https://nominatim.openstreetmap.org/search', {
             params: {
-                address: address,
-                key: apiKey
+                q: address,
+                format: 'json',
+                limit: 1
+            },
+            headers: {
+                'User-Agent': 'SmartUrbanServiceLocator/1.0'
             }
         });
 
-        if (response.data.results.length > 0) {
-            const location = response.data.results[0].geometry.location;
+        if (response.data && response.data.length > 0) {
+            const location = response.data[0];
             return {
-                lat: location.lat,
-                lng: location.lng,
-                formattedAddress: response.data.results[0].formatted_address
+                lat: parseFloat(location.lat),
+                lng: parseFloat(location.lon),
+                formattedAddress: location.display_name
             };
         }
 
