@@ -2,49 +2,58 @@ const User = require('./models/User');
 
 const seedAdmin = async () => {
     try {
-        const adminEmail = 'admin@gmail.com';
-        const adminExists = await User.findOne({ email: adminEmail });
+        console.log('Starting Credential Verification...');
 
-        if (!adminExists) {
-            await User.create({
+        // 1. Admin
+        let admin = await User.findOne({ email: 'admin@gmail.com' });
+        if (!admin) {
+            admin = new User({
                 name: 'ADMIN',
-                email: adminEmail,
-                password: 'admin', // Will be hashed by pre-save hook
+                email: 'admin@gmail.com',
                 role: 'admin'
             });
-            console.log('Admin account created: admin@gmail.com / admin');
+            console.log('Creating Admin account...');
         } else {
-            console.log('Admin account already exists.');
+            console.log('Updating Admin account...');
         }
+        admin.password = 'admin'; // Force set password
+        await admin.save();
+        console.log('SUCCESS: Admin credentials set to: admin@gmail.com / admin');
 
-        // Seed Provider
-        const providerEmail = 'provider@gmail.com';
-        const providerExists = await User.findOne({ email: providerEmail });
-        if (!providerExists) {
-            await User.create({
+        // 2. Provider
+        let provider = await User.findOne({ email: 'provider@gmail.com' });
+        if (!provider) {
+            provider = new User({
                 name: 'Test Provider',
-                email: providerEmail,
-                password: 'password123',
+                email: 'provider@gmail.com',
                 role: 'provider'
             });
-            console.log('Provider account created: provider@gmail.com / password123');
+            console.log('Creating Provider account...');
+        } else {
+            console.log('Updating Provider account...');
         }
+        provider.password = 'password123'; // Force set password
+        await provider.save();
+        console.log('SUCCESS: Provider credentials set to: provider@gmail.com / password123');
 
-        // Seed User
-        const userEmail = 'user@gmail.com';
-        const userExists = await User.findOne({ email: userEmail });
-        if (!userExists) {
-            await User.create({
+        // 3. User
+        let user = await User.findOne({ email: 'user@gmail.com' });
+        if (!user) {
+            user = new User({
                 name: 'Test User',
-                email: userEmail,
-                password: 'password123',
+                email: 'user@gmail.com',
                 role: 'user'
             });
-            console.log('User account created: user@gmail.com / password123');
+            console.log('Creating User account...');
+        } else {
+            console.log('Updating User account...');
         }
+        user.password = 'password123'; // Force set password
+        await user.save();
+        console.log('SUCCESS: User credentials set to: user@gmail.com / password123');
 
     } catch (error) {
-        console.error('Error seeding data:', error);
+        console.error('Error in seedAdmin:', error);
     }
 };
 
