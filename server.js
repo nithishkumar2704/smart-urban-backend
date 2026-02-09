@@ -7,11 +7,14 @@ const connectDB = require('./config/db');
 dotenv.config();
 
 // Connect to database
-const seedAdmin = require('./seedAdmin');
+// Connect to database
+const seedData = require('./seedData');
 
 // Connect to database
 connectDB().then(() => {
-    seedAdmin();
+    // Run full data seed (Users + Listings)
+    // In production, you might want to run this manually or conditionally
+    seedData();
 }).catch(err => {
     console.error('Database connection failure:', err);
 });
